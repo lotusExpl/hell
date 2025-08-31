@@ -105,7 +105,7 @@ void flist_print_el(char* input, struct flist* el) {
 // computes the arguments in the function call
 // can only take |+-=~ macro calls, and function args
 int* compute_args(int val, int index, char* input,
-        int* registers, int* func_args, struct tuple position) {
+        int* registers, int* func_args, struct tuple* position) {
     int * res = calloc(9, sizeof(int));
     res[0] = val;
     int i = 1;
@@ -160,11 +160,11 @@ int* compute_args(int val, int index, char* input,
                 break;
 
             case '~':
-                res[i] = position.a;
+                res[i] = position->a;
                 break;
 
             case '=':
-                res[i] = position.b;
+                res[i] = position->b;
                 break;
             // TODO add the macro calls maybe
 
@@ -180,15 +180,23 @@ int* compute_args(int val, int index, char* input,
 // return the new position I guess
 // here func_args is the possible args of the current scope 
 // if this call is already made in a function
-// but the execustion is made with new args 
+// but the execution is made with new args 
+/*
 struct tuple exec_func(char* input, struct cell*** memory, 
-        struct tuple position, int val, int* func_args,
+        struct tuple* position, int val, int* func_args,
         int* REGISTERS, int std_in_index, int INDEX) {
 
     int* new_args = compute_args(val, INDEX, input, 
             REGISTERS, func_args, position);
+    // should init the args for the function execution in a new scope
+    int exec_res = interpreter(input, cell*** memory,
+        REGISTERS, std_in_index, 0, // this is the new index ,
+        new_args, position);
 
-    return position;
+    return *position;
 }
-
-
+*/
+// remarks
+/*
+    std_in_index should be a pointer so its state is saved through scopes
+   */

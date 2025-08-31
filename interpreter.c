@@ -5,9 +5,9 @@ int MEMORY_SIZE = 255;
 // interprets an input code and create local coordinates etc
 int interpreter(char* input, struct cell*** memory,
         char* REGISTERS, int std_in_index, int INDEX,
-        int* func_args, struct tuple position) {
-    int X = position.a;      // x axis in memory
-    int Y = position.b;      // y axis in memory
+        int* func_args, struct tuple* position) {
+    int X = position->a;      // x axis in memory
+    int Y = position->b;      // y axis in memory
     struct stack* loop_stack = NULL;
     struct flist* functions = NULL;
 
@@ -119,9 +119,17 @@ int interpreter(char* input, struct cell*** memory,
                         // and replace u with \0
                 printf("Error: trailing } at index: %d.\n", INDEX);
                 return -1;
+
+            case '(':
+                // TODO
+                break;
         }
         INDEX++;
     }
+    // here I update the position so the outer scope is correctly placed
+    // usefull whe this is a function execution that moves the position
+    position->a = X;
+    position->b = Y;
     flist_free(functions);
     free_stack(loop_stack);
     return 0;
@@ -151,7 +159,7 @@ int launcher(char* input) {
     struct cell*** MEMORY = init_grid(MEMORY_SIZE, MEMORY_SIZE);
     char REGISTERS[8] = "01234567";
     struct tuple pos = {0,0};
-    int ret_val = interpreter(input, MEMORY, REGISTERS, 0, INDEX, NULL,pos);
+    int ret_val = interpreter(input, MEMORY, REGISTERS, 0, INDEX, NULL,&pos);
     printf("\n");
     free_memory(MEMORY, MEMORY_SIZE, MEMORY_SIZE);
     return ret_val;

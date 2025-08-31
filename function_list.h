@@ -6,6 +6,7 @@
 #include <stdio.h>
 
 #include "cell.h"
+#include "interpreter.h"
 
 // use NULL to initialize a flist without values
 struct flist {
@@ -32,9 +33,9 @@ void flist_destroy(struct flist* el);
 void flist_free(struct flist* list);
 void flist_print_el(char* input, struct flist* el);
 int* compute_args(int val, int index, char* input,
-        int* registers, int* func_args, struct tuple position);
+        int* registers, int* func_args, struct tuple* position);
 struct tuple exec_func(char* input, struct cell*** memory, 
-        struct tuple position, int val, int* func_args,
+        struct tuple* position, int val, int* func_args,
         int* REGISTERS, int std_in_index, int INDEX);
 
 #endif // FUNCTION_LIST_H

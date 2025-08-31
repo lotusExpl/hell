@@ -9,7 +9,7 @@
 int launcher(char* input);
 int interpreter(char* input, struct cell*** memory, 
         char* registers, int std_in_index, int index,
-        int* func_args, struct tuple position);
+        int* func_args, struct tuple* position);
 struct flist* function_dec(char* input, int* index,
         struct flist* list, int val);
 
