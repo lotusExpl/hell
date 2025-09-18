@@ -32,6 +32,8 @@ struct flist* flist_delete(struct flist* list, int val);
 void flist_destroy(struct flist* el);
 void flist_free(struct flist* list);
 void flist_print_el(char* input, struct flist* el);
+
+// below is to revise
 int* compute_args(int val, int index, char* input,
         int* registers, int* func_args, struct tuple* position);
 struct tuple exec_func(char* input, struct cell*** memory, 

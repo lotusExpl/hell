@@ -104,6 +104,8 @@ void flist_print_el(char* input, struct flist* el) {
 
 // computes the arguments in the function call
 // can only take |+-=~ macro calls, and function args
+// val is the value associated to the function
+// res is the argument values array
 int* compute_args(int val, int index, char* input,
         int* registers, int* func_args, struct tuple* position) {
     int * res = calloc(9, sizeof(int));
@@ -113,7 +115,7 @@ int* compute_args(int val, int index, char* input,
         switch (input[index]) {
             case '|':
                 i++;
-                if (i == 8) {
+                if (i >= 8) {
                     printf("Error: function call with to many args.\n");
                     return NULL;
                 }
@@ -169,7 +171,8 @@ int* compute_args(int val, int index, char* input,
             // TODO add the macro calls maybe
 
             default:
-                printf("Error: unexpected symbols in function call.\n");
+                printf("Error: unexpected symbol <%c> in function call.\n",
+                                    input[index]);
                 return NULL;
         }
         index++;
@@ -181,6 +184,7 @@ int* compute_args(int val, int index, char* input,
 // here func_args is the possible args of the current scope 
 // if this call is already made in a function
 // but the execution is made with new args 
+
 /*
 struct tuple exec_func(char* input, struct cell*** memory, 
         struct tuple* position, int val, int* func_args,
